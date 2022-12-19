@@ -5,17 +5,19 @@ name: CI
 # Controls when the workflow will run
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types:
+      [opened, synchronize, reopened]
 
+      # &&
+      # !github.event.label.name == 'WIP' &&
+      # !contains(github.event.pull_request.labels.*.name, 'WIP')
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     if: |
-      !github.event.pull_request.draft &&
-      !github.event.label.name == 'WIP' &&
-      !contains(github.event.pull_request.labels.*.name, 'WIP')
+      !github.event.pull_request.draft
 
     runs-on: ubuntu-latest
 
